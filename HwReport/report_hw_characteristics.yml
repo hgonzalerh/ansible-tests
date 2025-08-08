@@ -1,0 +1,33 @@
+- name: Gather facts for all inventory
+  hosts: all
+  # redundant but explicit
+  gather_facts: true
+
+  tasks:
+    - name: Show all facts we're insterested in, for debugging only
+      ansible.builtin.debug:
+        var: "{{ item }}"
+      loop:
+        - ansible_distribution_version
+        - ansible_distribution_file_variety
+        - ansible_kernel
+        - ansible_processor
+        - ansible_system_vendor
+        - ansible_swaptotal_mb
+        - ansible_machine
+        - ansible_memtotal_mb
+        - ansible_dns.nameservers
+        - ansible_processor_count
+        - ansible_all_ipv4_addresses
+
+- name: Render template
+  hosts: localhost
+
+  tasks:
+    - name: Simulare rendering a file to check for template syntax
+      ansible.builtin.debug:
+        msg: |
+          hostname,memoria,No. de procesadores,nameservers
+          {% for hostname in hostvars %}
+          {{ hostname }},{{ ansible_memtotal_mb }},{{ ansible_processor_count }},{{ '-'.join(ansible_dns.nameservers) }}
+          {% endfor %}
