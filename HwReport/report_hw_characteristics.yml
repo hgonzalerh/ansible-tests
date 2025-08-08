@@ -29,5 +29,5 @@
         msg: |
           hostname,memoria,No. de procesadores,nameservers
           {% for hostname in hostvars %}
-          {{ hostname }},{{ ansible_memtotal_mb }},{{ ansible_processor_count }},{{ '-'.join(ansible_dns.nameservers) }}
+          {{ hostname }},{{ hostvars[hostname].ansible_memtotal_mb }},{{ hostvars[hostname].ansible_processor_count }},{{ '-'.join(hostvars[hostname].ansible_dns.nameservers) }}
           {% endfor %}
