@@ -24,10 +24,15 @@
   hosts: localhost
 
   tasks:
-    - name: Simulare rendering a file to check for template syntax
-      ansible.builtin.debug:
-        msg: |
-          hostname,memoria,No. de procesadores,nameservers
-          {% for hostname in hostvars %}
-          {{ hostname }},{{ hostvars[hostname].ansible_memtotal_mb }},{{ hostvars[hostname].ansible_processor_count }},{{ '-'.join(hostvars[hostname].ansible_dns.nameservers) }}
-          {% endfor %}
+    - name: Simulate rendering a file to check for template syntax
+      ansible.builtin.template:
+        src: templates/report.csv.j2
+        dest: report_hw.csv
+
+  - name: Copy report to a server
+    hosts: all[1]
+    tasks:
+      - name: Copy report
+        ansible.builtin.copy:
+          src: report_hw.csv
+          dest: ./
