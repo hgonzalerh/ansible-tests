@@ -1,4 +1,4 @@
 hostname,hostname_en_maquina,memoria,No. de procesadores,version SO,tipo SO,kernel,virtualizador,memoria fisica,direcciones IP,nameservers
-{% for hostname in hostvars if hostname != 'localhost' -%}
+{% for hostname in hostvars if hostname != 'localhost' %}
 {{ hostname }},{{ hostvars[hostname].ansible_hostname }},{{ hostvars[hostname].ansible_memtotal_mb }},{{ hostvars[hostname].ansible_processor_count }},{{ hostvars[hostname].ansible_distribution_version }},{{ hostvars[hostname].ansible_distribution_file_variety }},{{ hostvars[hostname].ansible_kernel }},{{ hostvars[hostname].ansible_system_vendor }},{{ hostvars[hostname].ansible_memory_mb.real.total }},{{ '-'.join(hostvars[hostname].ansible_all_ipv4_addresses) }},{{ '-'.join(hostvars[hostname].ansible_dns.nameservers) }}
 {% endfor %}
