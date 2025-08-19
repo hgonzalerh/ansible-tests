@@ -1,16 +1,10 @@
 {# --- helpers --- #}
-{% macro csv_escape(v) -%}
-{# Convert None → empty string; stringify everything; double inner quotes; wrap in quotes #}
-"{{ (v | default('') | string) | replace('"','""') }}"
-{%- endmacro %}
-
 {% macro csv_row(items) -%}
 {{ items | map('default','') | map('string')
          | map('replace','"','""')
          | map('regex_replace','^(.*)$','"\\1"')
          | join(',') }}
 {%- endmacro %}
-
 hostname,hostname_en_maquina,memoria,No. de procesadores,version SO,tipo SO,kernel,virtualizador,memoria fisica,direcciones IP,nameservers
 {% for h in hostvars if h != 'localhost' %}
 {{ csv_row([
