@@ -36,3 +36,5 @@
       ansible.builtin.copy:
         src: report_hw.csv
         dest: ./
+      tags:
+        - transfer
