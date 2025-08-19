@@ -1,0 +1,4 @@
+
+
+hostname,hostname_en_maquina,memoria,No. de procesadores,version SO,tipo SO,kernel,virtualizador,memoria fisica,direcciones IP,nameservers
+"netbird.hugonz.me","netbird-server","1771","1","9.6","RedHat","5.14.0-570.28.1.el9_6.x86_64","DigitalOcean","1771","10.108.0.4-172.18.0.1-159.89.180.23-172.17.0.1","67.207.67.2-67.207.67.3"

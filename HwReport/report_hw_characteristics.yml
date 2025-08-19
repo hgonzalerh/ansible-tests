@@ -30,7 +30,7 @@
         dest: report_hw.csv
 
 - name: Copy report to a server
-  hosts: all[1]
+  hosts: all[0]
   tasks:
     - name: Copy report
       ansible.builtin.copy:
