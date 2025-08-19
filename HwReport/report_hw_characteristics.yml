@@ -2,11 +2,11 @@
   hosts: all
   # redundant but explicit
   gather_facts: true
-
   tasks:
     - name: Show all facts we're insterested in, for debugging only
       ansible.builtin.debug:
         var: "{{ item }}"
+        verbosity: 2
       loop:
         - ansible_distribution_version
         - ansible_distribution_file_variety
@@ -22,14 +22,13 @@
 
 - name: Render template
   hosts: localhost
-
   tasks:
-    - name: Simulate rendering a file to check for template syntax
+    - name: Render file locally
       ansible.builtin.template:
         src: templates/report.csv.j2
         dest: report_hw.csv
 
-- name: Copy report to a server
+- name: Copy report to the first server in the inventory
   hosts: all[0]
   tasks:
     - name: Copy report
