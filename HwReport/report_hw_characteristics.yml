@@ -20,8 +20,19 @@
         - ansible_processor_count
         - ansible_all_ipv4_addresses
 
+    - name: Create a custom fact that's the list of disks 
+      ansible.builtin.set_fact:
+        discos_fisicos: >-
+          {{ 
+            ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='key') 
+            | zip(
+            ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='value.size') 
+                )
+          }}
+
 - name: Render template
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Render file locally
       ansible.builtin.template:
@@ -30,6 +41,7 @@
 
 - name: Copy report to the first server in the inventory
   hosts: all[0]
+  gather_facts: false
   tasks:
     - name: Copy report
       ansible.builtin.copy:
