@@ -5,12 +5,13 @@
          | map('regex_replace','^(.*)$','"\\1"')
          | join(',') }}
 {%- endmacro %}
+{# --- helpers --- #}
 hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,version SO,tipo SO,kernel,virtualizador,memoria fisica,direcciones IP,nameservers,discos físicos
 {% for h in hostvars if h != 'localhost' %}
 {{ csv_row([
   h,
   hostvars[h].ansible_hostname,
-  hostvars[h].ansible_memtotal_mb,
+  (hostvars[h].ansible_memtotal_mb | string ) ~ " MB",
   hostvars[h].ansible_processor[2],
   hostvars[h].ansible_processor_count,
   hostvars[h].ansible_distribution_version,
