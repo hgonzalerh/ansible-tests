@@ -6,7 +6,7 @@
          | join(',') }}
 {%- endmacro %}
 {# --- helpers --- #}
-hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,version SO,kernel,virtualizador,memoria fisica,direcciones IP,nameservers,discos físicos
+hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,version SO,kernel,virtualizador,direcciones IP,nameservers,discos físicos
 {% for h in hostvars if h != 'localhost' %}
 {{ csv_row([
   h,
@@ -17,7 +17,6 @@ hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,ve
   hostvars[h].ansible_distribution_version | default(hostvars[h].ansible_os_name),
   hostvars[h].ansible_kernel,
   hostvars[h].ansible_system_vendor,
-  hostvars[h].ansible_memory_mb.real.total,
   (hostvars[h].ansible_all_ipv4_addresses | default([]) | join(',')),
   (hostvars[h].ansible_dns.nameservers | default([]) | join(',')),
   (hostvars[h].discos_fisicos | default([]) | join(',')),
