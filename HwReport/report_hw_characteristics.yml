@@ -9,7 +9,6 @@
         verbosity: 2
       loop:
         - ansible_distribution_version
-        - ansible_distribution_file_variety
         - ansible_kernel
         - ansible_processor
         - ansible_system_vendor
@@ -24,11 +23,12 @@
       ansible.builtin.set_fact:
         discos_fisicos: >-
           {{ 
-            (ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='key') 
+            ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='key') 
             | zip(
             ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='value.size') 
-                )) | default([])
+                ) 
           }}
+      ignore_errors: true
 
 - name: Render template
   hosts: localhost
