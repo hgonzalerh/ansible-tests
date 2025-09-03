@@ -30,6 +30,13 @@
           }}
       when: ('indows' not in ansible_os_family)
 
+    - name: Save currently active hosts
+      ansible.builtin.set_fact:
+        hosts_revisados: "{{  ansible_play_hosts }}"
+      delegate_facts: true
+      delegate_to: localhost
+      run_once: true
+
 - name: Render template
   hosts: localhost
   gather_facts: false

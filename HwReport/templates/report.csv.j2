@@ -7,7 +7,7 @@
 {%- endmacro %}
 {# --- helpers --- #}
 hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,version SO,kernel,virtualizador,direcciones IP,nameservers,discos físicos
-{% for h in hostvars if h != 'localhost' %}
+{% for h in hostvars.localhost.hosts_revisados if h != 'localhost' %}
 {{ csv_row([
   h,
   hostvars[h].ansible_hostname,
