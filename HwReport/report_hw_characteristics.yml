@@ -28,7 +28,7 @@
             ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='value.size') 
                 ) 
           }}
-      ignore_errors: true
+      when: ('indows' not in ansible_os_family)
 
 - name: Render template
   hosts: localhost
