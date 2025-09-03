@@ -20,6 +20,6 @@ hostname,hostname_en_maquina,memoria,Modelo de Procesador,No. de procesadores,ve
   hostvars[h].ansible_memory_mb.real.total,
   (hostvars[h].ansible_all_ipv4_addresses | default([]) | join(',')),
   (hostvars[h].ansible_dns.nameservers | default([]) | join(',')),
-  (hostvars[h].discos_fisicos | join(',')),
+  (hostvars[h].discos_fisicos | default([]) | join(',')),
 ]) }}
 {% endfor %}
