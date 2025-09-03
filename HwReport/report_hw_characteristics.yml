@@ -24,10 +24,10 @@
       ansible.builtin.set_fact:
         discos_fisicos: >-
           {{ 
-            ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='key') 
+            (ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='key') 
             | zip(
             ansible_devices | dict2items | selectattr('value.host') | sort(attribute='key') | map(attribute='value.size') 
-                )
+                )) | default([])
           }}
 
 - name: Render template
@@ -43,9 +43,18 @@
   hosts: all[0]
   gather_facts: false
   tasks:
-    - name: Copy report
+    - name: Copy report (on Linux)
       ansible.builtin.copy:
         src: report_hw.csv
         dest: ./
       tags:
         - transfer
+      when: ('indows' not in ansible_os_family)
+
+    - name: Copy report (on Windows)
+      ansible.builtin.win_copy:
+        src: report_hw.csv
+        dest: c:\
+      tags:
+        - transfer
+      when: ('indows' in ansible_os_family)
