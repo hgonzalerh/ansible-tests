@@ -5,22 +5,27 @@
     # s3_auth CHOOSE WHAT AUTH TO USEIN AAP OR CLI
     # src_filepath is the local file to be uploaded to s3
   tasks:
-    - name: Fetch file from node
-      ansible.builtin.fetch:
-        src: "{{ src_filepath }}"
-        dest: ./
+    # - name: Fetch file from node
+      # ansible.builtin.fetch:
+      #   src: "{{ src_filepath }}"
+      #   dest: ./
+
+    - name: Create a file in localhost
+      ansible.builtin.copy:
+        dest: ./testfile
+        content: |
+          Algun texto
+      delegate_to: localhost
 
     - name: check that file was fetched
       ansible.builtin.command: find .
       delegate_to: localhost
 
-    # - name: Upload file to s3
-    #   amazon.aws.s3_object:
-    #     bucket: mybucket
-    #     object: "{{
-    #     src: 
-    #     mode: put
-    #     endpoint_url: ""        
+    - name: Upload file to s3
+      amazon.aws.s3_object:
+        bucket: pruebas_ansible_manolo
+        object: testfile
+        src: ./testfile
+        mode: put
+        endpoint_url: "https://10.67.16.125"        
       
-      
-    
