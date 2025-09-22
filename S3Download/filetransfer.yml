@@ -1,4 +1,5 @@
 - hosts: all
+  gather_facts: false
   vars:
     # s3_url: 
     # combination of url and bucket path
@@ -28,4 +29,5 @@
         src: ./testfile
         mode: put
         endpoint_url: "https://10.67.16.125"        
+      delegate_to: localhost
       
