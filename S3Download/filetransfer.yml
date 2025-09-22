@@ -3,11 +3,11 @@
     # s3_url: 
     # combination of url and bucket path
     # s3_auth CHOOSE WHAT AUTH TO USEIN AAP OR CLI
-    # filepath is the local file to be uploaded to s3
+    # src_filepath is the local file to be uploaded to s3
   tasks:
     - name: Fetch file from node
       ansible.builtin.fetch:
-        src: "{{ filepath }}"
+        src: "{{ src_filepath }}"
         dest: ./
 
     - name: check that file was fetched
