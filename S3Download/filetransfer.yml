@@ -1,0 +1,25 @@
+- hosts: all
+  vars:
+    # s3_url: 
+    # combination of url and bucket path
+    # s3_auth CHOOSE WHAT AUTH TO USEIN AAP OR CLI
+    # filepath is the local file to be uploaded to s3
+  tasks:
+    - name: Fetch file from node
+      ansible.builtin.fetch:
+        src: "{{ filepath }}"
+        dest: ./
+
+    - name: check that file was fetched
+      ansible.builtin.command: find .
+
+    # - name: Upload file to s3
+    #   amazon.aws.s3_object:
+    #     bucket: mybucket
+    #     object: "{{
+    #     src: 
+    #     mode: put
+    #     endpoint_url: ""        
+      
+      
+    
