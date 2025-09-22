@@ -12,6 +12,7 @@
 
     - name: check that file was fetched
       ansible.builtin.command: find .
+      delegate_to: localhost
 
     # - name: Upload file to s3
     #   amazon.aws.s3_object:
