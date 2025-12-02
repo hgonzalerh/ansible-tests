@@ -11,12 +11,12 @@
 
   tasks:
     - name: latest Apache version installed
-      yum:
+      ansible.builtin.yum:
         name: httpd
         state: latest
 
     - name: Apache enabled and running
-      service:
+      ansble.builtin.service:
         name: httpd
         enabled: true
         state: started  
@@ -26,3 +26,7 @@
         repo: "{{ git_source_url }}"
         version: "{{ git_branch }}" 
         dest: "{{ documentroot }}"
+
+    - name: Make sure the docroot is exposed and theres an index.html file or similar
+      ansible.builtin.uri:
+        url: http://{{ inventory_hostname }}/
