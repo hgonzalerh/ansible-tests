@@ -1,0 +1,28 @@
+- name: Deploy a JS application in the document root of a web server 
+  # Inventory should com in the template, if from REST, then a variable
+  hosts: all
+  # Apache dir and services require root to modify
+  become: true
+  vars:
+    # Should come from an extra var
+    # git_branch: 
+    git_source_url: https://github.com/hgonzalerh/js-to-do.git
+    documentroot: /var/www/html
+
+  tasks:
+    - name: latest Apache version installed
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Apache enabled and running
+      service:
+        name: httpd
+        enabled: true
+        state: started  
+
+    - name: Deploy the webpage to documentroot
+      ansible.builtin.git:
+        repo: "{{ git_source_url }}"
+        version: "{{ git_branch }}" 
+        dest: "{{ documentroot }}"
