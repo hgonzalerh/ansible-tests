@@ -12,7 +12,9 @@
   tasks:
     - name: latest Apache version installed
       ansible.builtin.yum:
-        name: httpd
+        name: 
+          - httpd
+          - git
         state: latest
 
     - name: Apache enabled and running
