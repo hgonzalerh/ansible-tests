@@ -16,7 +16,7 @@
         state: latest
 
     - name: Apache enabled and running
-      ansble.builtin.service:
+      ansible.builtin.service:
         name: httpd
         enabled: true
         state: started  
